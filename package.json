@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "This app was created as a challenge in FreeCodeCamp backend curriculum",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nishant-tomer/fcc-voting-app.git"
@@ -15,5 +12,21 @@
   "bugs": {
     "url": "https://github.com/nishant-tomer/fcc-voting-app/issues"
   },
-  "homepage": "https://github.com/nishant-tomer/fcc-voting-app#readme"
+  "homepage": "https://github.com/nishant-tomer/fcc-voting-app#readme",
+  "dependencies": {
+    "async": "~0.2.8",
+    "express": "~3.2.4",
+    "jade": "^1.11.0",
+    "mongodb": "^2.1.16",
+    "socket.io": "~0.9.14",
+    "multer": "^1.1.0",
+    "sugar-date": "^1.5.1"
+  },
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": "5.10.1",
+    "npm": "3.8.3"
+  }
 }
