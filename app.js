@@ -1,28 +1,37 @@
 var express = require("express")
-var Mongo = require('mongodb').MongoClient
-var path = require("path")
+    ,path = require("path")
+    ,fs = require("fs")
+    ,app = express()
+    ,env = require("./config/" + app.get("env"))
+    ,assets = path.join(env.cwd,"/assets")
+    ,views = path.join(env.cwd,"/views")
 
-var app = express()
-
-var env = require("./config/" + app.get("env"))
-var assets = path.join(env.cwd,"/client")
-var views = path.join(assets,"/views")
+var mongoose = require('mongoose')
+    ,mongoose.connect('mongodb://localhost/mydb')
 
 
-app.use(express.static(assets))
+
 app.set("views", views)
+
 app.set("view engine", "jade")
+app.use(express.static(assets))
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.use(express.cookieParser('your secret here'));
+app.use(express.session());
+app.use(app.router);
 
 
-// app.get("/", function (req,res){
-//
-//   res.render("index", {msg: ""})
-//
-// })
-//
-// app.use(function(req,res){
-//   res.redirect("/")
-// })
+fs.readdirSync('./controllers').forEach(function (file) {
+  if(file.substr(-3) == '.js') {
+      route = require('./controllers/' + file);
+      route.controller(app);
+  }
+});
+
+app.use(function(req,res){ res.redirect("/") })
 
 
 app.listen(process.env.PORT || 3000)
