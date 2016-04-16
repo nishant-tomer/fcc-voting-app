@@ -1,0 +1,19 @@
+{
+  "name": "voting-app",
+  "version": "1.0.0",
+  "description": "This app was created as a challenge in FreeCodeCamp backend curriculum",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nishant-tomer/fcc-voting-app.git"
+  },
+  "author": "Nishant Tomer <nishantfun4@gmail.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/nishant-tomer/fcc-voting-app/issues"
+  },
+  "homepage": "https://github.com/nishant-tomer/fcc-voting-app#readme"
+}
