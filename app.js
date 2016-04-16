@@ -1,9 +1,12 @@
 var express = require("express")
-var app = express()
 var Mongo = require('mongodb').MongoClient
-var env = require("./"+app.get("env"))
-var assets = require("path").join(env.cwd,"/client")
-var views = require("path").join(assets,"/views")
+var path = require("path")
+
+var app = express()
+
+var env = require("./config/" + app.get("env"))
+var assets = path.join(env.cwd,"/client")
+var views = path.join(assets,"/views")
 
 
 app.use(express.static(assets))
