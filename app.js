@@ -4,24 +4,20 @@ var express = require("express")
     ,app = express()
     ,env = require("./config/" + app.get("env"))
     ,assets = path.join(env.cwd,"/assets")
-    ,views = path.join(env.cwd,"/views")
+    ,views = path.join(env.cwd,"/views");
 
-var mongoose = require('mongoose')
-    ,mongoose.connect('mongodb://localhost/mydb')
+var mongoose = require("mongoose");
+    mongoose.connect(env.db_url);
 
-
-
-app.set("views", views)
-
-app.set("view engine", "jade")
-app.use(express.static(assets))
-app.use(express.favicon());
+app.set("views", views);
+app.set("view engine", "jade");
+app.use(express.static(assets));
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
+app.use(express.cookieParser('freecodecamp'));
 app.use(express.session());
-app.use(app.router);
+
 
 
 fs.readdirSync('./controllers').forEach(function (file) {
@@ -31,7 +27,7 @@ fs.readdirSync('./controllers').forEach(function (file) {
   }
 });
 
-app.use(function(req,res){ res.redirect("/") })
+app.use(function(req,res){ res.redirect("/login") });
 
 
-app.listen(process.env.PORT || 3000)
+app.listen(process.env.PORT || 8080)
