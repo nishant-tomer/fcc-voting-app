@@ -29,14 +29,12 @@ module.exports.controller = function(app, passport) {
     });
 
     app.get('/auth/google', passport.authenticate('google', {
-        scope: [
-            'https://www.googleapis.com/auth/userinfo.email',
-            'https://www.googleapis.com/auth/userinfo.profile'
-        ]
+        scope: ['email', 'profile']
     }));
+
     app.get('/callback/google',
         passport.authenticate('google', {
-            successRedirect: '/account',
+            successRedirect: '/',
             failureRedirect: '/login'
         }));
 

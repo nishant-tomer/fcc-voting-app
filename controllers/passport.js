@@ -1,9 +1,9 @@
 var GoogleStrategy = require('passport-google-oauth2').Strategy
 var User = require('../models/user')
 
-var  GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
-    ,GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
-    ,CALLBACK_URL = process.env.APP_URI + "callback/google";
+var GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET,
+    CALLBACK_URL = process.env.APP_URI + "/callback/google";
 
 module.exports.controller = function(app, passport) {
 
@@ -20,15 +20,15 @@ module.exports.controller = function(app, passport) {
     passport.use(new GoogleStrategy({
 
             clientID: GOOGLE_CLIENT_ID,
+            clientSecret: GOOGLE_CLIENT_SECRET,
             callbackURL: CALLBACK_URL,
             passReqToCallback: true
 
         },
 
+        function(request, accessToken, refreshToken, profile, done) {
 
-        function(token, refreshToken, profile, done) {
-
-            process.nextTick( function() {
+            process.nextTick(function() {
                 User.findOne({
                     'google.id': profile.id
                 }, function(err, user) {
@@ -56,5 +56,6 @@ module.exports.controller = function(app, passport) {
                     }
                 });
             });
-        }));
+        }
+    ));
 }

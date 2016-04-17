@@ -22,7 +22,7 @@
     "mongoose": "^4.4.12",
     "multer": "^1.1.0",
     "passport": "^0.3.0",
-    "passport-google-oauth2": "^0.1.0",
+    "passport-google-oauth2": "^0.1.6",
     "socket.io": "~0.9.14",
     "sugar-date": "^1.5.1"
   },
