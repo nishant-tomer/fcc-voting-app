@@ -1,8 +1,14 @@
 var mongoose = require('mongoose')
       ,Schema = mongoose.Schema
       ,userSchema = Object.create( Schema( {
-                                    username: String,
-                                    password: String
+
+                                    google: {
+                                    		id: String,
+                                    		displayName: String,
+                                    		username: String,
+                                        email: String
+                                    	}
+
                                 }))
 
 User = mongoose.model('user', userSchema)
