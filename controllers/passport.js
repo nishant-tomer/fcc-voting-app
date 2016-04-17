@@ -29,6 +29,7 @@ module.exports.controller = function(app, passport) {
         function(request, accessToken, refreshToken, profile, done) {
 
             process.nextTick(function() {
+
                 User.findOne({
                     'google.id': profile.id
                 }, function(err, user) {
@@ -42,9 +43,11 @@ module.exports.controller = function(app, passport) {
                         var newUser = new User();
 
                         newUser.google.id = profile.id;
-                        newUser.google.username = profile.username;
+                        newUser.google.firstName = profile.name.givenName;
+                        newUser.google.lastName = profile.name.familyName;
                         newUser.google.displayName = profile.displayName;
                         newUser.google.email = profile.email;
+                        newUser.google.image = profile._json.image.url;
 
                         newUser.save(function(err) {
                             if (err) {

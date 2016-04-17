@@ -1,15 +1,18 @@
 var mongoose = require('mongoose')
       ,Schema = mongoose.Schema
-      ,userSchema = Object.create( Schema( {
-
-                                    google: {
+      ,userSchema = Object.create(
+                        Schema({
+                                google: {
                                     		id: String,
                                     		displayName: String,
-                                    		username: String,
-                                        email: String
-                                    	}
+                                    		firstName: String,
+                                            lastName: String,
+                                            email: String,
+                                            image: String
+                                        }
 
-                                }))
+                            })
+                    );
 
 User = mongoose.model('user', userSchema)
 
