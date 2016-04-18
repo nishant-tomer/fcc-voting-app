@@ -1,0 +1,54 @@
+include ./profileHeader.jade
+
+.container.text-center(style='margin-top:50px; font-family:Open Sans')
+    - var profile = user
+    - var image = user.image.slice(0,-2) + "100"
+    
+    .row
+        .col-md-2
+        .col-md-8.bg-info
+            img.img-responsive.img-circle( src="#{image}", style="margin:auto;padding-top:5%;")
+            p.text-left    
+                p #{profile.displayName}
+                p #{profile.email}
+                p Polls Created : #{profile.polls.length}
+            
+        .col-md-2
+    .row(style="margin-top:10px;")
+        .col-md-2
+        .col-md-8
+            .row
+                .col-md-4
+                .col-md-4
+                    .panel
+                        .panel-heading.bg-primary
+                            .panel-title Create a new Poll
+                        .panel-body.bg-info(style="height:150px; padding-top: 50px;")
+                            button.btn.btn-success(data-toggle="modal" data-target="#newPoll") <i class="fa fa-plus"></i>
+                .col-md-4
+        .col-md-2
+    include modal.html
+    .row        
+        .col-md-2
+        .col-md-8
+            .row
+                div.bg-primary.panel-heading( style="height:45px; font-size:17px; margin-bottom:20px;") My Polls
+                .col-md-4
+                    .panel
+                        .panel-heading.bg-info.text-center
+                           .panel-title(style='font-family:Droid Serif;') <strong>Who am i ?</strong>
+                        .panel-body.text-justify(style='font-family:Open Sans;')
+                            h4 This is a test poll to check the functioning of current app.
+                            h1
+                            p 
+                                <i class="fa fa-male"></i> 
+                                span Nishant Tomer 
+                            p
+                                <i class="fa fa-bar-chart"></i> 
+                                span 6
+                            a.pull-right.btn.btn-info(href='#', role='button') View &raquo;
+                            a.btn.btn-danger(href='#', role='button') Delete
+
+                
+        .col-md-2
+    include ../footer.jade

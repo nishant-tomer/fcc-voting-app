@@ -1,5 +1,8 @@
 var mongoose = require('mongoose')
 var user = require('../models/user')
+var poll = require('../models/poll')
+var option = require('../models/option')
+
 
 module.exports.controller = function(app, passport) {
 
@@ -7,7 +10,7 @@ module.exports.controller = function(app, passport) {
         if (req.isAuthenticated()) {
             return next();
         }
-        res.redirect('/login');
+        res.redirect('/');
     }
 
     app.get('/', function(req, res) {
@@ -16,14 +19,8 @@ module.exports.controller = function(app, passport) {
         });
     });
 
-    app.get('/account', isLoggedIn, function(req, res) {
-        res.render('account', {
-            user: req.user
-        });
-    });
-
-    app.get('/login', function(req, res) {
-        res.render('login', {
+    app.get('/profile', isLoggedIn, function(req, res) {
+        res.render('users/profile', {
             user: req.user
         });
     });
@@ -34,18 +31,19 @@ module.exports.controller = function(app, passport) {
 
     app.get('/callback/google',
         passport.authenticate('google', {
-            successRedirect: '/',
-            failureRedirect: '/login'
+            successRedirect: '/profile',
+            failureRedirect: '/'
         }));
-
     app.get('/logout', function(req, res) {
         req.logout();
         res.redirect('/');
     });
 
+    app.post('/profile/:id/poll', isLoggedIn, function(req, res) {});
+    app.post('/profile/:id/poll/:name/option', isLoggedIn, function(req, res) {});
+    app.put('/profile/:id/poll/:name', isLoggedIn, function(req, res) {});
+    app.put('/profile/:id/option/:name', isLoggedIn, function(req, res) {});
+    app.delete('/profile/:id/poll/:name', isLoggedIn, function(req, res) {});
+    app.delete('/profile/:id/option/:name', isLoggedIn, function(req, res) {});
 
-
-    app.get('/api/:id/clicks', isLoggedIn, function(req, res) {});
-    app.post('/api/:id/clicks', isLoggedIn, function(req, res) {});
-    app.delete('/api/:id/clicks', isLoggedIn, function(req, res) {});
 }

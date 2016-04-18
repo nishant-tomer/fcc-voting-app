@@ -22,9 +22,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
-app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
-app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
-app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
+app.use(express.static(assets))
 app.use(express.logger('dev'));
 app.use(passport.initialize());
 app.use(passport.session());

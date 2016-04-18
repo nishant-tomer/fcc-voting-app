@@ -1,9 +1,13 @@
-include header.jade
+if user === undefined
+    include header.jade
+else 
+    include ./users/profileHeader.jade
 
-.jumbotron.bg-success
+.jumbotron
     .container.text-center
         blockquote
             h2 Hello, There!
+            h3 This is an Electronic Voting Machine. Not the usual one. 
             p.lead You can do <i class="fa fa-hand-peace-o"></i> things here.
         .row
             .col-md-1
@@ -29,21 +33,7 @@ include header.jade
 
             .col-md-1
 .container.text-center
-    .row
-        .col-md-3
-            .panel
-                .panel-heading.bg-info.text-center
-                   .panel-title(style='font-family:Droid Serif;') <strong>Who am i ?</strong>
-                .panel-body.text-justify(style='font-family:Open Sans;')
-                    h4 This is a test poll to check the functioning of current app.
-                    h1
-                    a.pull-right.btn.btn-default(href='#', role='button') Vote &raquo;
-                    p 
-                        <i class="fa fa-male"></i> 
-                        span Nishant Tomer 
-                    p
-                        <i class="fa fa-bar-chart"></i> 
-                        span 6
+    .row#polls
         .col-md-3
             .panel
                 .panel-heading.bg-info.text-center
@@ -51,35 +41,7 @@ include header.jade
                 .panel-body.text-justify(style='font-family:Open Sans;')
                     h4 This is a test poll to check the functioning of current app.
                     h1
-                    a.pull-right.btn.btn-default(href='#', role='button') Vote &raquo;
-                    p 
-                        <i class="fa fa-male"></i> 
-                        span Nishant Tomer 
-                    p
-                        <i class="fa fa-bar-chart"></i> 
-                        span 6
-        .col-md-3
-            .panel
-                .panel-heading.bg-info.text-center
-                    .panel-title(style='font-family:Droid Serif;') <strong>Who am i ?</strong>
-                .panel-body.text-justify(style='font-family:Open Sans;')
-                    h4 This is a test poll to check the functioning of current app.
-                    h1
-                    a.pull-right.btn.btn-default(href='#', role='button') Vote &raquo;
-                    p 
-                        <i class="fa fa-male"></i> 
-                        span Nishant Tomer 
-                    p
-                        <i class="fa fa-bar-chart"></i> 
-                        span 6
-        .col-md-3
-            .panel
-                .panel-heading.bg-info.text-center
-                    .panel-title(style='font-family:Droid Serif;') <strong>Who am i ?</strong>
-                .panel-body.text-justify(style='font-family:Open Sans;')
-                    h4 This is a test poll to check the functioning of current app.
-                    h1
-                    a.pull-right.btn.btn-default(href='#', role='button') Vote &raquo;
+                    a.pull-right.btn.btn-info(href='#', role='button') Vote &raquo;
                     p 
                         <i class="fa fa-male"></i> 
                         span Nishant Tomer 
