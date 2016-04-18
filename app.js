@@ -3,11 +3,13 @@ var express = require("express"),
     session = require('express-session'),
     passport = require('passport'),
     assets = require("path").join(process.cwd(), "/assets"),
-    views = require("path").join(process.cwd(), "/views");
+    views = require("path").join(process.cwd(), "/views"),
+    livereload = require('express-livereload');
 
 
 var app = express()
 require('dotenv').load()
+livereload(app, config={watchDir : views})
 
 var mongoose = require("mongoose");
 mongoose.connect(process.env.MONGODB_URI);
@@ -20,7 +22,9 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
-app.use(express.static(assets));
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
+app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.use(express.logger('dev'));
 app.use(passport.initialize());
 app.use(passport.session());

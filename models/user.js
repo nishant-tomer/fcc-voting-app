@@ -9,7 +9,14 @@ var mongoose = require('mongoose')
                                             lastName: String,
                                             email: String,
                                             image: String
-                                        }
+                                },
+                                polls:  {
+
+                                    
+
+
+
+                                }
 
                             })
                     );
