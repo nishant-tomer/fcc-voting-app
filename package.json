@@ -15,8 +15,10 @@
   "homepage": "https://github.com/nishant-tomer/fcc-voting-app#readme",
   "dependencies": {
     "async": "~0.2.8",
+    "body-parser": "^1.15.0",
     "dotenv": "^1.2.0",
     "express": "~3.2.4",
+    "express-sanitizer": "^1.0.1",
     "express-session": "^1.13.0",
     "jade": "^1.11.0",
     "mongoose": "^4.4.12",
@@ -24,7 +26,8 @@
     "passport": "^0.3.0",
     "passport-google-oauth2": "^0.1.6",
     "socket.io": "~0.9.14",
-    "sugar-date": "^1.5.1"
+    "sugar-date": "^1.5.1",
+    "validator": "^5.2.0"
   },
   "scripts": {
     "start": "node app.js"

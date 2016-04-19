@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
-      ,Schema = mongoose.Schema
-      ,userSchema = Object.create(
+    ,Schema = mongoose.Schema
+    ,userSchema = Object.create(
                         Schema({
                         		uid: String,
                         		displayName: String,
@@ -8,7 +8,8 @@ var mongoose = require('mongoose')
                                 lastName: String,
                                 email: String,
                                 image: String,
-                                polls:  [{ type:String, ref:'Poll' }]
+                                polls:  [{ type: Schema.Types.ObjectId, ref:'Poll' }],
+                                voted:  [{ type: Schema.Types.ObjectId, ref:'Poll' }]
 
                             })
                     );

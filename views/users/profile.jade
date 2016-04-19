@@ -6,7 +6,7 @@ include ./profileHeader.jade
     
     .row
         .col-md-2
-        .col-md-8.bg-info
+        .col-md-8.bg-info 
             img.img-responsive.img-circle( src="#{image}", style="margin:auto;padding-top:5%;")
             p.text-left    
                 p #{profile.displayName}
@@ -27,7 +27,6 @@ include ./profileHeader.jade
                             button.btn.btn-success(data-toggle="modal" data-target="#newPoll") <i class="fa fa-plus"></i>
                 .col-md-4
         .col-md-2
-    include modal.html
     .row        
         .col-md-2
         .col-md-8
@@ -51,4 +50,5 @@ include ./profileHeader.jade
 
                 
         .col-md-2
+    include ./modal.jade
     include ../footer.jade

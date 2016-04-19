@@ -3,42 +3,57 @@ if user === undefined
 else 
     include ./users/profileHeader.jade
 
-.jumbotron
-    .container.text-center
+div.jumbotron
+    div.container.text-center
         blockquote
             h2 Hello, There!
             h3 This is an Electronic Voting Machine. Not the usual one. 
-            p.lead You can do <i class="fa fa-hand-peace-o"></i> things here.
-        .row
-            .col-md-1
-            .col-md-4
-                .panel
-                    .panel-heading.bg-primary.text-center
-                        .panel-title(style='font-family:Droid Serif;') <strong>Look.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vote.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Share.</strong>
-                    .panel-body.text-justify(style='font-family:Open Sans;')
+            p.lead(style='font-family:Droid Serif;') You can do <i class="fa fa-hand-peace-o"></i> things here.
+        div.row
+            div.col-md-1
+            div.col-md-4
+                div.panel
+                    div.panel-heading.bg-primary.text-center
+                        div.panel-title(style='font-family:Droid Serif;') <strong>Look.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vote.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Share.</strong>
+                    div.panel-body.text-justify(style='font-family:Open Sans;')
                         p 1.<strong>Look</strong> at any of the Polls below to check detailed stats.
                         p 2.<strong>Vote</strong> for your favourite option. Pick any Poll.
                         p 3.<strong>Share</strong> Polls at your favourite social platform.
 
             
-            .col-md-2
-            .col-md-4
-                .panel
-                    .panel-heading.bg-primary.text-center
-                        .panel-title(style='font-family:Droid Serif;') <strong>Create.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invite.</strong>
-                    .panel-body.text-justify(style='font-family:Open Sans;')
+            div.col-md-2
+            div.col-md-4
+                div.panel
+                    div.panel-heading.bg-primary.text-center
+                        div.panel-title(style='font-family:Droid Serif;') <strong>Create.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invite.</strong>
+                    div.panel-body.text-justify(style='font-family:Open Sans;')
                         p 1.<strong>Create</strong> a Poll after signing in using your Google account.
-                        p 2.<strong>Edit</strong> Poll options on any Poll, after signing in. 
+                        p 2.<strong>Add</strong> Poll options on any Poll, after signing in. 
                         p 3.<strong>Invite</strong> your friends to vote by sharing the Poll.
 
-            .col-md-1
-.container.text-center
-    .row#polls
-        .col-md-3
-            .panel
-                .panel-heading.bg-info.text-center
-                    .panel-title(style='font-family:Droid Serif;') <strong>Who am i ?</strong>
-                .panel-body.text-justify(style='font-family:Open Sans;')
+            div.col-md-1
+div.container.text-center
+    div.row#polls
+        div.col-md-1
+        div.col-md-3
+            div.panel
+                div.panel-heading.bg-info.text-center
+                    div.panel-title(style='font-family:Droid Serif;') <strong>Who am i ?</strong>
+                div.panel-body.text-justify(style='font-family:Open Sans;')
+                    h4 This is a test poll to check the functioning of current app.
+                    h1
+                    a.pull-right.btn.btn-info(href='#', role='button') Vote &raquo;
+                    p 
+                        <i class="fa fa-male"></i> 
+                        span Nishant Tomer 
+                    p
+                        <i class="fa fa-bar-chart"></i> 
+                        span 6              
+        div.col-md-3(style="margin:0 4%;") 
+            div.panel
+                div.panel-heading.bg-info.text-center
+                    div.panel-title(style='font-family:Droid Serif;') <strong>Who am i ?</strong>
+                div.panel-body.text-justify(style='font-family:Open Sans;')
                     h4 This is a test poll to check the functioning of current app.
                     h1
                     a.pull-right.btn.btn-info(href='#', role='button') Vote &raquo;
@@ -48,6 +63,21 @@ else
                     p
                         <i class="fa fa-bar-chart"></i> 
                         span 6
-        
+        div.col-md-3
+            div.panel
+                div.panel-heading.bg-info.text-center
+                    div.panel-title(style='font-family:Droid Serif;') <strong>Who am i ?</strong>
+                div.panel-body.text-justify(style='font-family:Open Sans;')
+                    h4 This is a test poll to check the functioning of current app.
+                    h1
+                    a.pull-right.btn.btn-info(href='#', role='button') Vote &raquo;
+                    p 
+                        <i class="fa fa-male"></i> 
+                        span Nishant Tomer 
+                    p
+                        <i class="fa fa-bar-chart"></i> 
+                        span 6
+        div.col-md-1
+
     include footer.jade
         
