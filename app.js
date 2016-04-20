@@ -36,7 +36,7 @@ app.use(passport.session());
 
 fs.readdirSync('./controllers').forEach(function(file) {
     if (file.substr(-3) == '.js') {
-        route = require('./controllers/' + file);
+        var route = require('./controllers/' + file);
         route.controller(app, passport);
     }
 });

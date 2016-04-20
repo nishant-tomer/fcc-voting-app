@@ -14,6 +14,6 @@ var mongoose = require('mongoose')
                             })
                     );
 
-User = mongoose.model('user', userSchema)
+var User = mongoose.model('user', userSchema)
 
 module.exports = User

@@ -1,0 +1,22 @@
+#pollModal.modal.fade(tabindex='-1', role='dialog')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header
+        h4#pollName.modal-title.text-center 
+      .modal-body
+        .container-fluid
+            .row
+                .col-md-6
+                    h5.bg-primary#desc(style = "padding: 10px; border-radius:5px; font-family: Droid Serif") 
+                    p
+                        #options
+                        button.btn.btn-success#sendVote(type='button') Send Vote
+
+                .col-md-6
+                    canvas#myChart(width="250",height="250")
+      
+        
+      .modal-footer
+            p#votes.pull-left(style="margin-left:15px;")
+            button.btn.btn-danger(type='button', data-dismiss='modal') Close
+       

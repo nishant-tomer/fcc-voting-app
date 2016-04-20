@@ -19,6 +19,32 @@ module.exports.controller = function(app, passport) {
             user: req.user
         });
     });
+    
+    app.get("/polls", function(req, res) {
+        
+        var promise = getPolls()
+        promise.then( function(polls){ 
+            res.json(JSON.stringify(polls))
+        })
+    
+    })
+    
+    app.get("/poll/:id", function(req, res) {
+        
+        var promise = getPoll(req.params.id)
+        promise.then( function(poll){ 
+            res.json(JSON.stringify(poll))
+        })
+    
+    })
+    
+    app.get("/option/:optId", function(req, res) {
+        
+        var result = {ok : ""}
+        findVote(req.params.optId).then( castVote, function(err){ result.ok = "failed"; res.json(result) })
+                                  .then( function(err){ result.ok = "ok"; res.json(result) },function(err){ result.ok = "failed"; res.json(result) })
+    
+    })
 
     app.get('/profile', isLoggedIn, function(req, res) {
         res.render('users/profile', {
@@ -51,6 +77,47 @@ module.exports.controller = function(app, passport) {
     app.delete('/profile/:id/option/:name', isLoggedIn, function(req, res) {});
 
 }
+
+
+function getPoll(id){
+    
+var poll = Poll.find({_id:id})
+               .populate({
+                   path : "options",
+                   populate: { path : "voters", select: 'displayName' }
+                 })
+               .exec()
+return poll
+        
+}
+
+function findVote(optId){
+    
+var promise = Option.findOne({_id:optId}).exec() 
+    
+return promise
+    
+}
+ 
+function castVote(option) {
+        
+        option.count += 1
+        var promise =  option.save()
+        return promise
+                    
+    }
+
+
+function getPolls(){
+    
+var polls = Poll.find({}).populate('options','count').exec()
+return polls
+        
+}
+    
+
+
+
 
 function savePoll(req){
 
@@ -106,7 +173,7 @@ function savePoll(req){
                     if(err) return "failed"
                     person.polls.forEach( function (poll){
                         poll.options.forEach( function(option){
-                            console.log( option )});
+                            console.log( option.name )});
 
                         })
 

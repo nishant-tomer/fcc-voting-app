@@ -3,11 +3,11 @@ var mongoose = require('mongoose')
     ,optionSchema = Object.create(
                         Schema({
                                 belongsTo : { type: String, ref:'Poll' },
-                                creator: { type:String, ref: 'User'},
+                                creator: { type:String, ref: 'user'},
                                 name : String,
                                 count: Number,
-                                voters : [{ type: Schema.Types.ObjectId, ref:'User'}]
+                                voters : [{ type: Schema.Types.ObjectId, ref:'user'}]
                               })
                     );
-Option = mongoose.model('Option', optionSchema)
+var Option = mongoose.model('Option', optionSchema)
 module.exports = Option
