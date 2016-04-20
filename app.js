@@ -5,13 +5,12 @@ var express = require("express"),
     bodyParser = require('body-parser'),
     passport = require('passport'),
     assets = require("path").join(process.cwd(), "/assets"),
-    views = require("path").join(process.cwd(), "/views"),
-    livereload = require('express-livereload');
+    views = require("path").join(process.cwd(), "/views");
 
 
 var app = express()
 require('dotenv').load()
-livereload(app, config={watchDir : views})
+
 
 
 var mongoose = require("mongoose");
