@@ -9,8 +9,6 @@ var mongoose = require('mongoose')
                                 email: String,
                                 image: String,
                                 polls:  [{ type: Schema.Types.ObjectId, ref:'Poll' }],
-                                voted:  [{ type: Schema.Types.ObjectId, ref:'Poll' }]
-
                             })
                     );
 

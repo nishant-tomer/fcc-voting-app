@@ -2,18 +2,16 @@ var mongoose = require('mongoose')
 var User = require('../models/user')
 var Poll = require('../models/poll')
 var Option = require('../models/option')
-var validator = require('validator')
-
 
 module.exports.controller = function(app, passport) {
-
+    
     function isLoggedIn(req, res, next) {
         if (req.isAuthenticated()) {
             return next();
         }
         res.redirect('/');
     }
-
+    
     app.get('/', function(req, res) {
         res.render('index', {
             user: req.user
@@ -21,167 +19,240 @@ module.exports.controller = function(app, passport) {
     });
     
     app.get("/polls", function(req, res) {
-        
-        var promise = getPolls()
-        promise.then( function(polls){ 
+        function err() {
+            res.json({
+                ok: "failed"
+            })
+        }
+        getPolls().then(function(polls) {
             res.json(JSON.stringify(polls))
-        })
-    
+        }, err)
     })
     
     app.get("/poll/:id", function(req, res) {
-        
-        var promise = getPoll(req.params.id)
-        promise.then( function(poll){ 
+        function err() {
+            res.json({
+                ok: "failed"
+            })
+        }
+        getPollData(req.params.id).then(function(poll) {
             res.json(JSON.stringify(poll))
-        })
+        }, err)
+    })
     
+    app.post("/poll/:id", isLoggedIn, function(req, res) {
+        function err() {
+            res.json({
+                ok: "failed"
+            })
+        }
+
+        function success() {
+            res.json({
+                ok: "ok"
+            })
+        }
+        findPoll(req.params.id).then(function(poll) {
+            return saveOption(req, poll);
+        }, err).then(success, err)
     })
     
     app.get("/option/:optId", function(req, res) {
-        
-        var result = {ok : ""}
-        findVote(req.params.optId).then( castVote, function(err){ result.ok = "failed"; res.json(result) })
-                                  .then( function(err){ result.ok = "ok"; res.json(result) },function(err){ result.ok = "failed"; res.json(result) })
-    
-    })
+        function err() {
+            res.json({
+                ok: "failed"
+            })
+        }
 
+        function success() {
+            res.json({
+                ok: "ok"
+            })
+        }
+        findOption(req.params.optId).then(castVote, err).then(
+            success, err)
+    })
+    
     app.get('/profile', isLoggedIn, function(req, res) {
         res.render('users/profile', {
             user: req.user
         });
     });
-
+    
     app.get('/auth/google', passport.authenticate('google', {
         scope: ['email', 'profile']
     }));
-
-    app.get('/callback/google',
-        passport.authenticate('google', {
-            successRedirect: '/profile',
-            failureRedirect: '/'
-        }));
+    
+    app.get('/callback/google', passport.authenticate('google', {
+        successRedirect: '/profile',
+        failureRedirect: '/'
+    }));
+    
     app.get('/logout', function(req, res) {
         req.logout();
         res.redirect('/');
     });
-
+    
     app.post('/profile/poll', isLoggedIn, function(req, res) {
-        var result = savePoll(req);
-        res.json({ok : result });
+       savePoll(req, res, savePollCallback);
     });
-    app.post('/profile/poll/:name/option', isLoggedIn, function(req, res) {});
-    app.put('/profile/poll/:name', isLoggedIn, function(req, res) {});
-    app.put('/profile/:id/option/:name', isLoggedIn, function(req, res) {});
-    app.delete('/profile/:id/poll/:name', isLoggedIn, function(req, res) {});
-    app.delete('/profile/:id/option/:name', isLoggedIn, function(req, res) {});
-
-}
-
-
-function getPoll(id){
     
-var poll = Poll.find({_id:id})
-               .populate({
-                   path : "options",
-                   populate: { path : "voters", select: 'displayName' }
-                 })
-               .exec()
-return poll
+    app.get('/polls/user', isLoggedIn, function(req, res) {
         
-}
-
-function findVote(optId){
-    
-var promise = Option.findOne({_id:optId}).exec() 
-    
-return promise
-    
-}
- 
-function castVote(option) {
+        findUserPolls(req.user.uid)
+            .then( function(data){ res.json( JSON.stringify(data.polls) ) }, function(err){ throw err} )
         
-        option.count += 1
-        var promise =  option.save()
-        return promise
-                    
-    }
-
-
-function getPolls(){
+    });
     
-var polls = Poll.find({}).populate('options','count').exec()
-return polls
+    app.delete('/poll/:id', isLoggedIn, function(req, res) {
         
+        findPoll(req.params.id)
+            .then( function(data){ return deletePoll(data) }, function (err) { throw err}  )
+            .then (  function(data) { res.json({ok:"ok"}) }, function (err) { throw err})
+        
+        
+    });
+
+   
 }
-    
 
+function validator(string){
+    var pattern = /[^a-zA-Z_?:&0-9-]+/
+    var test = string.match(pattern)
+    if (test == null ){ return true }
+    return false
+}
 
+function deletePoll(poll){
+  return  poll.remove()
+}
 
+function getPollData(id) {
+    var poll = Poll.find({
+        _id: id
+    }).populate({
+        path: "options",
+        populate: {
+            path: "voters",
+            select: 'displayName'
+        }
+    }).exec()
+    return poll
+}
 
-function savePoll(req){
+function findPoll(id) {
+    var poll = Poll.findOne({
+        _id: id
+    }).exec()
+    return poll
+}
 
-    var uid = req.user.uid
+function findOption(optId) {
+    var option = Option.findOne({
+        _id: optId
+    }).exec()
+    return option
+}
 
-    User.findOne({ uid:uid })
-        .exec(function (err, person) {
-
-             if (err) return "failed";
-
-             var poll = new Poll({
-                _id:     mongoose.Types.ObjectId(),
-                creator: uid,
-                name:    req.body.name,
-                desc:    req.body.desc
-              });
-
-             req.body.options.forEach( function (val,index,array){
-
-                 var option = new Option({
-                        _id: mongoose.Types.ObjectId(),
-                        name: val,
-                        creator: uid,
-                        count : 0,
-                        belongsTo: req.body.name
-                 })
-                 poll.options.push(option)
-                 option.save(function (err) {
-                   if (err) return "failed"
-
-                 });
-
-
-
-             })
-
-             poll.save(function (err) {
-               if (err) return "failed"
-             });
-
-             person.polls.push(poll)
-
-             person.save(function (err){
-                if(err) return "failed"
-
-
-            User.findOne({uid:uid})
-                .populate({
-                    path: 'polls',
-                    populate: { path : 'options'}})
-                .exec(function (err, person) {
-
-                    if(err) return "failed"
-                    person.polls.forEach( function (poll){
-                        poll.options.forEach( function(option){
-                            console.log( option.name )});
-
-                        })
-
-
-
-                 })
-             })
+function saveOption(req, poll) {
+    req.body.options.forEach(function(val, index, array) {
+        if ( !validator(val)){ throw new Error('Whoops!'); }
+        var option = new Option({
+            _id: mongoose.Types.ObjectId(),
+            name: val,
+            creator: req.user.uid,
+            count: 0,
+            belongsTo: poll.name
+        })
+        poll.options.push(option)
+        option.save(function(err) {
+            if (err) throw err
+        });
     })
-    return "ok"
+    return poll.save();
+}
 
+function castVote(option) {
+    option.count += 1
+    return option.save()
+}
+
+function getPolls() {
+    var polls = Poll.find({}).populate('options', 'count').exec()
+    return polls
+}
+
+function findUserPolls(uid){
+    
+    var polls = User.findOne({uid:uid})
+                    .populate({
+                        path: "polls",
+                        populate: {
+                            path: "options",
+                            select: 'count'
+                        }
+                    }).exec()
+    
+    return polls
+    
+}
+
+function savePollCallback(res, flag) {
+    res.json ({ok: flag})
+}
+
+function savePoll(req, res, func) {
+    var uid = req.user.uid
+    var result = "ok";
+    User.findOne({
+        uid: uid
+    }).exec(function(err, person) {
+        if (err) {
+            result = "failed";
+            func(res,result)
+        }
+         if ( !validator(req.body.name)){ throw new Error('Whoops!'); }
+        if ( !validator(req.body.desc)){ throw new Error('Whoops!'); }
+
+        var poll = new Poll({
+            _id: mongoose.Types.ObjectId(),
+            creator: uid,
+            name: req.body.name,
+            desc: req.body.desc
+        });
+        req.body.options.forEach(function(val, index, array) {
+            
+            if ( !validator(val)){ throw new Error('Whoops!'); }
+
+            var option = new Option({
+                _id: mongoose.Types.ObjectId(),
+                name: val,
+                creator: uid,
+                count: 0,
+                belongsTo: req.body.name
+            })
+            poll.options.push(option)
+            option.save(function(err) {
+                if (err) {
+                    result = "failed";
+                    func(res, result)
+                }
+            });
+        })
+        poll.save(function(err) {
+            if (err) {
+                result = "failed";
+                func(res, result)
+            }
+            person.polls.push(poll)
+            person.save(function(err) {
+                if (err) {
+                    result = "failed";
+                    func(res, result)
+                }
+                
+                func(res, result)
+            });
+        })
+    })
 }

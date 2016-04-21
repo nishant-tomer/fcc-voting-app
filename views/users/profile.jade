@@ -30,25 +30,12 @@ include ./profileHeader.jade
     .row        
         .col-md-2
         .col-md-8
-            .row
-                div.bg-primary.panel-heading( style="height:45px; font-size:17px; margin-bottom:20px;") My Polls
-                .col-md-4
-                    .panel
-                        .panel-heading.bg-info.text-center
-                           .panel-title(style='font-family:Droid Serif;') <strong>Who am i ?</strong>
-                        .panel-body.text-justify(style='font-family:Open Sans;')
-                            h4 This is a test poll to check the functioning of current app.
-                            h1
-                            p 
-                                <i class="fa fa-male"></i> 
-                                span Nishant Tomer 
-                            p
-                                <i class="fa fa-bar-chart"></i> 
-                                span 6
-                            a.pull-right.btn.btn-info(href='#', role='button') View &raquo;
-                            a.btn.btn-danger(href='#', role='button') Delete
-
+            div.bg-primary.panel-heading( style="height:45px; font-size:17px; margin-bottom:20px;") My Polls
+            .row#userPolls
                 
         .col-md-2
-    include ./pollCreateModal.jade
     include ../footer.jade
+
+include ./pollCreateModal.jade
+include ../pollShowModal.jade
+

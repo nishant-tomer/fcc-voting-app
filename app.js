@@ -1,9 +1,9 @@
 var express = require("express"),
     fs = require("fs"),
     session = require('express-session'),
-    sanitizer = require('express-sanitizer'),
     bodyParser = require('body-parser'),
     passport = require('passport'),
+    helmet = require('helmet'),
     assets = require("path").join(process.cwd(), "/assets"),
     views = require("path").join(process.cwd(), "/views");
 
@@ -21,7 +21,7 @@ app.set("views", views);
 app.set("view engine", "jade");
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-app.use(sanitizer());
+app.use(helmet())
 app.use(session({
     secret: 'fcc-voting-app-secret',
     resave: false,

@@ -20,17 +20,21 @@ $('document').ready(function(){
         var desc = modal.find('#desc').val()
         var options = {}
         $(".option").each(function(index){
-            option = $( this ).val()
+            var option = $( this ).val()
+            if ( !validator(option)){ $("#createMsg").html( " <br/>There is an error at option : " +(Number(index)+1)+ ' <br/>"Allowed Values are Alphabets, Numerals, \', \" _ , ?, :, &, - and , character' ) }
             options[index] = option
-            if( option.length === 0){ send = false; modal.find("#msg").append("Empty Option Value at option : "+(Number(index)+1)+" <br/>") }
+            if( option.length === 0){ send = false; modal.find("#createMsg").append(" <br/>Empty Option Value at option : "+(Number(index)+1)) }
         })
 
-        if(name.length === 0){ modal.find("#msg").append("Please give your poll a Name<br/>")}
-        else if(desc.length < 10){ modal.find("#msg").append("Please give your poll a bit long Description. Min is 20 characters.<br/>")}
-        else if(options.length < 2){ modal.find("#msg").append("Please give your poll atleast two options<br/>")}
+        if(name.length === 0){ modal.find("#createMsg").append("<br/>Please give your poll a Name")}
+        else if ( !validator(name)){ $("#createMsg").html( '<br/>There is an error in your Name <br/> Allowed Values are Alphabets, Numerals, \', \" _ , ?, :, &, - and , character' ) }
+        else if(desc.length < 10){ modal.find("#createMsg").append("<br/>Please give your poll a bit long Description. Min is 20 characters.")}
+        else if ( !validator(desc)){ $("#createMsg").html( '<br/>There is an error in your Description <br/> Allowed Values are Alphabets, Numerals, \', \" _ , ?, :, &, - and , character' ) }
+        else if(options.length < 2){ modal.find("#createMsg").append("<br/>Please give your poll atleast two options")}
+        
         else if( send ) {
 
-            modal.find("#msg").html("")
+            modal.find("#createMsg").html("")
             $.ajax({
                 url: "/profile/poll",
                 type:"POST",
@@ -40,8 +44,22 @@ $('document').ready(function(){
                                 if (data.ok == "ok" ) {
                                     window.location.href = "/profile"
                                     }
-                            }
+                                else { $("#createMsg").html("An error Occured. Try Again") }
+
+                            },
+                error: function(){ $("#createMsg").html("An error Occured. Try Again")}
+
             });
         }
     });
+    
+    
+    
+       function validator(string){
+        var pattern = /[^a-zA-Z,"_'?:&0-9-]+/
+        var test = string.match(pattern)
+        if (test == null ){ return true }
+        return false
+    }
+ 
 });

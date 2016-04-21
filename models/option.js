@@ -6,7 +6,6 @@ var mongoose = require('mongoose')
                                 creator: { type:String, ref: 'user'},
                                 name : String,
                                 count: Number,
-                                voters : [{ type: Schema.Types.ObjectId, ref:'user'}]
                               })
                     );
 var Option = mongoose.model('Option', optionSchema)

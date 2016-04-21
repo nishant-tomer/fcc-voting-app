@@ -1,40 +1,38 @@
 if user === undefined
     include header.jade
+    div.jumbotron
+        div.container.text-center
+            blockquote
+                h2 Hello, There!
+                h3 This is an Electronic Voting Machine. Not the usual one. 
+                p.lead(style='font-family:Droid Serif;') You can do <i class="fa fa-hand-peace-o"></i> things here.
+            div.row
+                div.col-md-1
+                div.col-md-4
+                    div.panel
+                        div.panel-heading.bg-primary.text-center
+                            div.panel-title(style='font-family:Droid Serif;') <strong>Look.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vote.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Share.</strong>
+                        div.panel-body.text-justify(style='font-family:Open Sans;')
+                            p 1.<strong>Look</strong> at any of the Polls below to check detailed stats.
+                            p 2.<strong>Vote</strong> for your favourite option. Pick any Poll.
+                            p 3.<strong>Share</strong> Polls at your favourite social platform.
+    
+                
+                div.col-md-2
+                div.col-md-4
+                    div.panel
+                        div.panel-heading.bg-primary.text-center
+                            div.panel-title(style='font-family:Droid Serif;') <strong>Create.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invite.</strong>
+                        div.panel-body.text-justify(style='font-family:Open Sans;')
+                            p 1.<strong>Create</strong> a Poll after signing in using your Google account.
+                            p 2.<strong>Add</strong> Poll options on any Poll, after signing in. 
+                            p 3.<strong>Invite</strong> your friends to vote by sharing the Poll.
+    
+                div.col-md-1
 else 
-    include ./users/profileHeader.jade
-
-div.jumbotron
-    div.container.text-center
-        blockquote
-            h2 Hello, There!
-            h3 This is an Electronic Voting Machine. Not the usual one. 
-            p.lead(style='font-family:Droid Serif;') You can do <i class="fa fa-hand-peace-o"></i> things here.
-        div.row
-            div.col-md-1
-            div.col-md-4
-                div.panel
-                    div.panel-heading.bg-primary.text-center
-                        div.panel-title(style='font-family:Droid Serif;') <strong>Look.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vote.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Share.</strong>
-                    div.panel-body.text-justify(style='font-family:Open Sans;')
-                        p 1.<strong>Look</strong> at any of the Polls below to check detailed stats.
-                        p 2.<strong>Vote</strong> for your favourite option. Pick any Poll.
-                        p 3.<strong>Share</strong> Polls at your favourite social platform.
-
+    include ./users/profileHeader.jade                
             
-            div.col-md-2
-            div.col-md-4
-                div.panel
-                    div.panel-heading.bg-primary.text-center
-                        div.panel-title(style='font-family:Droid Serif;') <strong>Create.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invite.</strong>
-                    div.panel-body.text-justify(style='font-family:Open Sans;')
-                        p 1.<strong>Create</strong> a Poll after signing in using your Google account.
-                        p 2.<strong>Add</strong> Poll options on any Poll, after signing in. 
-                        p 3.<strong>Invite</strong> your friends to vote by sharing the Poll.
-
-            div.col-md-1
-            
-            
-div.container.text-center
+div.container.text-center(style="margin-top:80px;")
     div.row#polls
     
     include footer.jade

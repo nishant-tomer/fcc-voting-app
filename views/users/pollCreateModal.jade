@@ -1,11 +1,11 @@
 #newPoll.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
     .modal-dialog(role='document')
         .modal-content
-            .modal-header
+            .modal-header.text-center
                 h4#myModalLabel.modal-title
                     strong New Poll
             .modal-body
-                .text-center.bg-info#msg 
+                .text-center.bg-info#createMsg 
                 p
                 form#pollForm.form-horizontal
                     .form-group
@@ -36,25 +36,3 @@
                 button.btn.btn-danger(type='button', data-dismiss='modal') Close
                 button.btn.btn-primary#createPoll(type='button' ) Create
 
-
-#editProfile.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-    .modal-dialog(role='document')
-        .modal-content
-            .modal-header
-                h4#myModalLabel.modal-title
-                    strong Edit Profile
-            .modal-body
-                form#pollForm.form-horizontal
-                    .form-group
-                        label.col-sm-3.control-label(for='name') New Name
-                        .col-sm-9
-                            input#name.form-control(type='text', name = "name" placeholder='Type an awesome name here', maxlength = 40, required)
-                            small.text-muted.pull-left max-length is 40 Characters.
-                    .form-group
-                        label.col-sm-3.control-label(for='email') New email
-                        .col-sm-9
-                            input#name.form-control(type='email', name = "email", placeholder='Type your new mail here', maxlength = 80, required)
-                            small.text-muted.pull-left max-length is 80 Characters.
-            .modal-footer
-                button.btn.btn-danger(type='button', data-dismiss='modal') Close
-                button.btn.btn-primary(type='button') Save Changes
