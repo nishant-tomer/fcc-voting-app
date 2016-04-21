@@ -1,4 +1,8 @@
 $('document').ready(function(){
+    
+    $('#pollModal').on('show.bs.modal', function (event) {
+                $("#createMsg").html("")
+    })
 
     $('#createOption').on('click', function(event){
         event.stopPropagation();
@@ -15,6 +19,7 @@ $('document').ready(function(){
         var send = true;
         event.stopPropagation();
         event.preventDefault();
+        $("#createMsg").html("")
         var modal = $("#newPoll")
         var name = modal.find('#name').val()
         var desc = modal.find('#desc').val()
